@@ -1,0 +1,19 @@
+In order to run this program you will need to run the following commands in your command line.
+
+1. Open a Terminal in the main Job_listing test folder and run
+python -m venv venv
+
+2. Then you will need to activate your virtual server with
+venv\Scripts\activate (this is the command for windows, but it will be different for other os)
+
+3. You will then need to install django for the project with this command
+pip install Django
+
+4. Go into the job_listing folder to start your server with
+cd job_listing
+
+5. Run the final command to start your server
+python manage.py runserver
+
+6. Finally ender this in your url for your browser to access the site.
+http://127.0.0.1:8000/jobs/

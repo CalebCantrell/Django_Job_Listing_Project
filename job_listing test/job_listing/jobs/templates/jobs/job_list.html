@@ -1,0 +1,73 @@
+<!-- jobs/templates/jobs/job_list.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center">Job Listings</h2>
+
+    <!-- Create New Job Listing button -->
+    <a href="{% url 'create_job' %}" class="btn ">Create New Job Listing</a>
+
+    <!-- Search form and Records per page dropdown on the same line -->
+    <form method="get" class="form-inline mb-3">
+      <label class="sr-only" for="searchCategory">Search Category</label>
+      <select class="form-control" id="searchCategory" name="search_category">
+        <option value="title" selected>Title</option>
+        <option value="company_name">Company</option>
+        <option value="location">Location</option>
+        <!-- Add more options as needed -->
+      </select>
+      <label class="sr-only" for="searchQuery">Search</label>
+      <input type="text" class="form-control" id="searchQuery" name="search_query" placeholder="Search">
+      <button type="submit" class="btn btn-primary ml-2">Search</button>
+      <div class="ml-auto form-group"> <!-- Floats to the right -->
+        <label class="mr-2">Records per page:</label>
+        <select name="jobs_per_page" class="form-control" onchange="this.form.submit()">
+          <option value="5" {% if jobs_per_page == 5 %}selected{% endif %}>5</option>
+          <option value="10" {% if jobs_per_page == 10 %}selected{% endif %}>10</option>
+          <option value="20" {% if jobs_per_page == 20 %}selected{% endif %}>20</option>
+          <!-- Add more options as needed -->
+        </select>
+      </div>
+    </form>
+
+    {% for job in jobs %}
+      <div class="card mb-4">
+        <div class="card-body">
+          <h3><a href="{% url 'job_detail' job.id %}" class="text-decoration-none">{{ job.title }}</a></h3>
+          <p class="card-text">{{ job.description }}</p>
+          <p class="card-text"><strong>Requirements:</strong> {{ job.requirements }}</p>
+
+          <!-- Edit and Delete buttons with Bootstrap classes -->
+          <div >
+            <a href="{% url 'edit_job' job.id %}" class="btn btn-secondary btn-sm">
+              Edit
+            </a>
+            <a href="{% url 'delete_job' job.id %}" class="btn btn-secondary btn-sm">
+              Delete
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+    <!-- Pagination links -->
+    <div class="pagination mt-4">
+      <span class="step-links">
+        {% if jobs.has_previous %}
+          <a href="?page=1&jobs_per_page={{ jobs_per_page }}&search_category={{ request.GET.search_category }}&search_query={{ request.GET.search_query }}" class="btn btn-secondary">&laquo; first</a>
+          <a href="?page={{ jobs.previous_page_number }}&jobs_per_page={{ jobs_per_page }}&search_category={{ request.GET.search_category }}&search_query={{ request.GET.search_query }}" class="btn btn-secondary">previous</a>
+        {% endif %}
+
+        <span class="current">
+          Page {{ jobs.number }} of {{ jobs.paginator.num_pages }}
+        </span>
+
+        {% if jobs.has_next %}
+          <a href="?page={{ jobs.next_page_number }}&jobs_per_page={{ jobs_per_page }}&search_category={{ request.GET.search_category }}&search_query={{ request.GET.search_query }}" class="btn btn-secondary">next</a>
+          <a href="?page={{ jobs.paginator.num_pages }}&jobs_per_page={{ jobs_per_page }}&search_category={{ request.GET.search_category }}&search_query={{ request.GET.search_query }}" class="btn btn-secondary">last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+{% endblock %}

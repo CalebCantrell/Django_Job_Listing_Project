@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container mt-5">
+    <h2 class="mb-4 text-center">Edit a Job Listing</h2>
+    <form method="post" enctype="multipart/form-data" class="col-md-8 mx-auto job-form">
+
+      {% csrf_token %}
+
+      <div class="mb-3 row">
+        <label for="{{ form.title.id_for_label }}" class="col-sm-3 col-form-label">Job Title</label>
+        <div class="col-sm-9">
+          {{ form.title }}
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="{{ form.title.id_for_label }}" class="col-sm-3 col-form-label">Comapny</label>
+        <div class="col-sm-9">
+          {{ form.company_name }}
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="{{ form.description.id_for_label }}" class="col-sm-3 col-form-label">Located</label>
+        <div class="col-sm-9">
+          {{ form.location }}
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="{{ form.description.id_for_label }}" class="col-sm-3 col-form-label">Job Description</label>
+        <div class="col-sm-9">
+          {{ form.description }}
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="{{ form.requirements.id_for_label }}" class="col-sm-3 col-form-label">Requirements</label>
+        <div class="col-sm-9">
+          {{ form.requirements }}
+        </div>
+      </div>
+
+      <div class="mb-3 row">
+        <label for="{{ form.requirements.id_for_label }}" class="col-sm-3 col-form-label">Apply By</label>
+        <div class="col-sm-9">
+          {{ form.app_deadline }}
+        </div>
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+        <a href="{% url 'job_list' %}" class="btn btn-primary mt-3">Cancel</a>
+      </div>
+    </form>
+ 
+  </div>
+{% endblock %}
